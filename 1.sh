@@ -1,1 +1,0 @@
-sudo python3 /Users/amateur/project/eyetomouse/test.py
