@@ -1,0 +1,1 @@
+在大佬的springboot+vue疫情管理系统（https://github.com/hugggfu/yiqing）基础上魔改的眼动控制系统
