@@ -12,7 +12,7 @@ import keyboard as k
 from pynput import keyboard, mouse
 import sys
 
-
+#向数据库里插入消息
 def insert_message(msg):
     now = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     con = pymysql.connect(host='localhost', password='123456', port=3306, user='root', charset='utf8')
@@ -24,18 +24,18 @@ def insert_message(msg):
     cur.close()
     con.close()
 
+FLAG_START = True  # 是否为第一次标志
+is_blink = False #眨眼功能是否开启
+is_move = False #鼠标移动功能是否开启
 
 insert_message("正在启动摄像头...")
 
+#键盘绑定事件
 def q():
     insert_message("q退出运行程序")
     time.sleep(1)
     os._exit(0)
 k.add_hotkey('q', q)
-
-FLAG_START = True  # 是否为第一次标志
-is_blink = False #眨眼功能是否开启
-is_move = False #鼠标移动功能是否开启
 
 def w(): #按w开启眨眼功能
     insert_message("开启眨眼功能")
@@ -68,7 +68,6 @@ k.add_hotkey('s', s)
 
 username = sys.argv[1]
 root = "/Users/amateur/project/eyetomouse/eyetomouse_py/image/" + username + "/"
-# root = "/Users/amateur/project/eyetomouse/eyetomouse_py/image/" + "admin" + "/"
 
 eye_cascade = cv2.CascadeClassifier(
     "/Users/amateur/opt/anaconda3/envs/ai_study_37/lib/python3.7/site-packages/cv2/data/haarcascade_eye.xml")
@@ -120,8 +119,6 @@ def scan2():
         )
         for (x, y, w, h) in face:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 绘制人脸方框
-            # cv2.imshow('dst', img)
-            # 在人脸的基础上识别眼睛
             face_gray = gray[y:y + h, x:x + w]
             face_color = frame[y:y + h, x:x + w]
 
@@ -184,13 +181,9 @@ for filepath in filepaths:
         Y.append([x, y])
     except:
         continue
-    # try:
-    # if keyboard.is_pressed('Q'):
-    #     insert_message("q退出")
-    #     break
+
 X = np.array(X) / 255.0
 Y = np.array(Y)
-# print (X.shape, Y.shape)
 
 model = Sequential()
 model.add(Conv2D(32, 3, 2, activation='relu', input_shape=(12, 44, 3)))
@@ -208,16 +201,9 @@ for epoch in range(epochs):
 print("model success")
 insert_message("模型训练成功，开始程序！")
 
-
+#主程序
 while True:
     time.sleep(0.1)
-    # FLAG = -1
-
-    # try:
-    # if keyboard.is_pressed('Q'):
-    #     insert_message("q退出运行程序")
-    #     cv2.destroyAllWindows()
-    #     exit()
     eyes = scan()
     is_left, is_right = scan2()
 
@@ -231,7 +217,6 @@ while True:
         FLAG_START = False
     else:
         if eyes is not None:
-            print(len(eyes))
             if is_move:
                 eyes = np.expand_dims(eyes / 255.0, axis=0)
                 x, y = model.predict(eyes)[0]
@@ -250,66 +235,3 @@ while True:
                 pyautogui.press("pageup")
                 insert_message("眨左眼，上滑")
                 time.sleep(1)
-
-
-    # if FLAG_START:
-    #     if eyes is None:
-    #         print("未监测到眼睛，退出程序")
-    #         insert_message("-4")
-    #         time.sleep(1)
-    #         insert_message("未监测到眼睛，退出程序")
-    #         cv2.destroyAllWindows()
-    #         exit()
-    #     time.sleep(2)
-    #     FLAG_START = False
-    #
-    # time_now = datetime.datetime.now()
-
-# 移动鼠标
-# if eyes is not None:
-#     eyes = np.expand_dims(eyes / 255.0, axis=0)
-#     x, y = model.predict(eyes)[0]
-#     pyautogui.moveTo(x * width, y * height)
-
-# if FLAG == 0:
-#     print("五次退出")
-#     insert_message("五次退出")
-#     FLAG = -1
-#     exit(0)
-# elif FLAG == 1:
-#     print("开启眨眼功能")
-#     insert_message("开启眨眼功能")
-#     FLAG = -1
-#     is_blink = True
-#     blink_list.clear()
-#     blink_list_second.clear()
-#     time.sleep(3)
-# elif FLAG == 2:
-#     print("关闭眨眼功能")
-#     insert_message("关闭眨眼功能")
-#     FLAG = -1
-#     is_blink = False
-#     blink_list.clear()
-#     blink_list_second.clear()
-#     time.sleep(3)
-# elif FLAG == 3:
-#     print("双击")
-#     insert_message("双击")
-#     FLAG = -1
-#     pyautogui.click()
-#     pyautogui.click()
-#     blink_list.clear()
-#     blink_list_second.clear()
-#     time.sleep(3)
-# elif FLAG == 4:
-#     print("单击")
-#     insert_message("单击")
-#     FLAG = -1
-#     pyautogui.click()
-#     blink_list.clear()
-#     blink_list_second.clear()
-#     time.sleep(3)
-# time.sleep(0.1)
-# except:
-#     print("-3") #数据库异常
-#     exit()

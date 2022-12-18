@@ -6,36 +6,25 @@
       <h1 style="font-size: 30px; color: #3333CC;-webkit-filter:blur(10px);-moz-filter:blur(10px);z-index:2;position: absolute;left: 260px;top:600px">{{message}}</h1>
       <h1 style="font-size: 30px; color: #3333CC;z-index:2;position: absolute;left: 260px;top:600px">{{message}}</h1>
       <h1 style="font-size: 20px; color: black;z-index:2;position: absolute;left: 260px;top:100px">欢迎使用眼动交互系统，详细说明请点击下方按钮</h1>
-<!--      <div style="width: 100px; height: 50px; line-height: 200px; border-radius: 15%; background-color: #1E90FF;-->
-<!--        font-size: 40px; color: #fff; text-align: center; cursor: pointer; box-shadow: 0 0 30px rgba(0, 0, 0, .2);-->
-<!--         opacity: 0.5;position: absolute;top:190px;left:610px;z-index: 1;-webkit-filter:blur(1px);-moz-filter:blur(1px);" @click="todocument">-->
-<!--      </div>-->
       <div style="width: 400px; height: 400px; line-height: 200px; border-radius: 50%; background-color: #1E90FF;
         font-size: 40px; color: #fff; text-align: center; cursor: pointer; box-shadow: 0 0 30px rgba(0, 0, 0, .2);
          opacity: 0;position: absolute;top:190px;left:610px;z-index: 1;-webkit-filter:blur(1px);-moz-filter:blur(1px);" @click="handleStart">
       </div>
-      <iframe src="http://xcmwh0929.top/temp/eye/index.html" height="600" width="1200" style="z-index: 0" scrolling="no" frameborder="0px"></iframe>
-      <button id="btn" @click="openInNewTab('http://xcmwh0929.top/temp/eye/mddocument.html')">转到文档</button>
+      <iframe src="http://resource.xcmwh0929.top/file/eyetomouse/background/" height="600" width="1200" style="z-index: 0" scrolling="no" frameborder="0px"></iframe>
+      <button id="btn" @click="openInNewTab('http://resource.xcmwh0929.top/file/eyetomouse/mddocument.html')">转到文档</button>
     </div>
 
   </div>
 
 
 
-<!--    <div style="width: 200px; height: 200px; line-height: 200px; border-radius: 50%; background-color: #1E90FF;-->
-<!--        font-size: 50px; color: #fff; text-align: center; cursor: pointer; box-shadow: 0 0 30px rgba(0, 0, 0, .2);-->
-<!--        margin-top:50px;" @click="test">-->
-<!--      测试-->
-<!--    </div>-->
 
 
-<!--  </div>-->
 
 </template>
 
 <script>
 
-import { useRouter } from 'vue-router'
 
 export default {
   name: "test",
